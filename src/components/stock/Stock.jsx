@@ -1,62 +1,112 @@
-import React from 'react';
 import './Stock.css';
 import './StockData.js'
-import {getIndexes} from "./StockData";
+import {useEffect, useState} from "react";
+import {getIndexes, getPrices} from "./StockData";
 
-class Stock extends React.Component {
+const Stock = () => {
 
-    data = getIndexes();
-    constructor(props) {
-        super(props);
-        this.state = {
-            'allIndex': []
-        }
-    }
+    const [indexes, setIndexes] = useState([])
+    const [prices, setPrices] = useState([])
 
-    // componentDidMount() {
-    //     let p = new Promise(resolve => {
-    //         resolve(getIndexes());
-    //     });
-    //
-    //     p.then((result => {
-    //         console.log(result)
-    //         this.setState({'allIndex': result})
-    //     }))
-    // }
+    useEffect(() => {
+
+        getIndexes().then((data) => {
+            setIndexes(data)
+        })
+
+        getPrices().then((data) => {
+            setPrices(data)
+        });
+
+        const interval = setInterval(() => {
+            getIndexes().then((data) => {
+                setIndexes(data)
+            })
+
+            getPrices().then((data) => {
+                setPrices(data)
+            });
+        }, 10000);
+
+        return () => {
+            clearInterval(interval);
+        };
 
 
-    render() {
-        console.log(this.data)
-        return (
-            <div>
-                <h1>Stock</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Index</th>
-                            <th>Change</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+    }, [])
 
-                    {
-                        this.data.map((element, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <td>{element.name}</td>
-                                        <td>{element.index}</td>
-                                        <td>{element.changePercent}</td>
-                                    </tr>
-                                )
+
+    return (
+        <div>
+            <h1>Stock</h1>
+            <table className={'table is-bordered is-striped is-narrow'}>
+                <thead>
+                <tr>
+                    <th className={'has-text-left'}>Name</th>
+                    <th>Index</th>
+                    <th>Change</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {
+                    indexes.map((element, index) => {
+                            let color = 'has-text-weight-bold ';
+                            if (element.changePercent < 0) {
+                                color += 'has-text-danger'
+                            } else if (element.changePercent > 0) {
+                                color += 'has-text-success';
+                            } else {
+                                color += 'has-text-warning'
                             }
-                        )
-                    }
-                    </tbody>
-                </table>
-            </div>
-        )
-    }
+                            return (
+                                <tr key={index}>
+                                    <td className={'has-text-left'}>{element.name}</td>
+                                    <td className={'has-text-right'}>{element.index}</td>
+                                    <td className={color}>{element.changePercent}</td>
+                                </tr>
+                            )
+                        }
+                    )
+                }
+                </tbody>
+            </table>
+
+            <h1>Price</h1>
+            <table className={'table is-bordered is-striped is-narrow'}>
+                <thead>
+                <tr>
+                    <th className={'has-text-left'}>Name</th>
+                    <th>Index</th>
+                    <th>Change</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {
+                    prices.map((element, index) => {
+                            let color = 'has-text-weight-bold ';
+                            if (element.changePercent < 0) {
+                                color += 'has-text-danger'
+                            } else if (element.changePercent > 0) {
+                                color += 'has-text-success';
+                            } else {
+                                color += 'has-text-warning'
+                            }
+                            return (
+                                <tr key={index}>
+                                    <td className={'has-text-left'}>{element.name}</td>
+                                    <td className={'has-text-right'}>{element.price}</td>
+                                    <td className={color}>{element.changePercent}</td>
+                                </tr>
+                            )
+                        }
+                    )
+                }
+                </tbody>
+            </table>
+        </div>
+    )
 }
 
 export default Stock;
