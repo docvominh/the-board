@@ -1,0 +1,15 @@
+server:
+  port: 80
+
+zuul:
+  routes:
+    index:
+      path: /tcbs/index/**
+      url: https://athenaaws.tcbs.com.vn/
+
+    stock:
+      path: /tcbs/stock/**
+      url: https://apipubaws.tcbs.com.vn
+logging:
+  file:
+    name: /var/log/the-board.log
