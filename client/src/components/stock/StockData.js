@@ -74,6 +74,7 @@ export async function getIndexes() {
 }
 
 export async function getPrices() {
+
     let allPrices = new Array();
     await fetch(process.env.REACT_APP_API_HOST + indexPath + pricePath,
         {
@@ -104,7 +105,6 @@ export async function getPrices() {
 
     return allPrices.sort((a, b) => (a.name > b.name) ? 1 : -1);
 }
-
 
 function roundUp(num, precision) {
     precision = Math.pow(10, precision)

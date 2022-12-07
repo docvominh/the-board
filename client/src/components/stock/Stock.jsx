@@ -4,12 +4,10 @@ import {useEffect, useState} from "react";
 import {getIndexes, getPrices} from "./StockData";
 
 const Stock = () => {
-
     const [indexes, setIndexes] = useState([])
     const [prices, setPrices] = useState([])
 
     useEffect(() => {
-
         getIndexes().then((data) => {
             setIndexes(data)
         })
@@ -31,10 +29,7 @@ const Stock = () => {
         return () => {
             clearInterval(interval);
         };
-
-
     }, [])
-
 
     return (
         <div>
@@ -44,11 +39,10 @@ const Stock = () => {
                 <tr>
                     <th className={'has-text-left'}>Name</th>
                     <th>Index</th>
-                    <th>Change</th>
+                    <th>Change (%)</th>
                 </tr>
                 </thead>
                 <tbody>
-
                 {
                     indexes.map((element, index) => {
                             let color = 'has-text-weight-bold ';
@@ -78,11 +72,10 @@ const Stock = () => {
                 <tr>
                     <th className={'has-text-left'}>Name</th>
                     <th>Index</th>
-                    <th>Change</th>
+                    <th>Change (%)</th>
                 </tr>
                 </thead>
                 <tbody>
-
                 {
                     prices.map((element, index) => {
                             let color = 'has-text-weight-bold ';
