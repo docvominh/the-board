@@ -1,5 +1,0 @@
-protect:
-    password: iron-man
-server:
-  address: localhost
-  port: 8098
