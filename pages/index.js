@@ -2,8 +2,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import 'bulma/css/bulma.min.css'
-import Stock from "../components/stock/Stock";
-import Rss from "../components/vnexpress/Rss";
+import Rss from "./components/vnexpress/Rss";
+import Stock from "./components/stock/Stock";
 
 export default function Home() {
   return (
@@ -19,7 +19,7 @@ export default function Home() {
           Welcome to <a href="https://nextjs.org">Next.js! {process.env.API_HOST}</a>
         </h1>
         <Stock/>
-        {/*<Rss/>*/}
+        <Rss/>
 
       </main>
 

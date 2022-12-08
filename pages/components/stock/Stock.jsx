@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {getIndexes, getPrices} from "./StockData";
 
 const Stock = () => {
+    const [isLoading, setLoading] = useState(false)
     const [indexes, setIndexes] = useState([])
     const [prices, setPrices] = useState([])
 
@@ -13,6 +14,8 @@ const Stock = () => {
         getPrices().then((data) => {
             setPrices(data)
         });
+
+        setLoading(false)
 
         const interval = setInterval(() => {
             getIndexes().then((data) => {
@@ -29,6 +32,9 @@ const Stock = () => {
         };
     }, [])
 
+    if(isLoading) return <p>Loading...</p>
+    if (!indexes) return <p>No Index data</p>
+    if (!prices) return <p>No Price data</p>
     return (
         <div>
             <h1>Stock</h1>
