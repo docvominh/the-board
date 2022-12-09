@@ -4,14 +4,14 @@ server:
 zuul:
   routes:
     index:
-      path: /tcbs/index/**
+      path: /api/tcbs/index/**
       url: https://athenaaws.tcbs.com.vn
 
     stock:
-      path: /tcbs/stock/**
+      path: /api/tcbs/stock/**
       url: https://apipubaws.tcbs.com.vn
     rss:
-      path: /vnexpress/**
+      path: /api/vnexpress/**
       url: https://vnexpress.net
 logging:
   file:
