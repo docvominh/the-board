@@ -17,7 +17,7 @@ const pricePath = '/athena/v1/futureIndexes'
 
 // top trade https://athenaaws.tcbs.com.vn/athena/v1/topTradingVol
 // price https://athenaaws.tcbs.com.vn/athena/v1/futureIndexes
-export async function getIndexes() {
+export async function getIndexes(indexes) {
     let allIndexes = new Array();
     await fetch(process.env.NEXT_PUBLIC_API_HOST + indexPath + vnIndexPath,
         {
@@ -70,11 +70,17 @@ export async function getIndexes() {
         .catch((error) => {
             console.error(error);
         });
+    let finalIndexes = new Array();
+    allIndexes.forEach((e,i) =>{
+        if(indexes.includes(e.name)){
+            finalIndexes.push(e);
+        }
+    })
 
-    return allIndexes.sort((a, b) => (a.name > b.name) ? 1 : -1);
+    return finalIndexes.sort((a, b) => (a.name > b.name) ? 1 : -1);
 }
 
-export async function getPrices() {
+export async function getPrices(types) {
 
     let allPrices = new Array();
     await fetch(process.env.NEXT_PUBLIC_API_HOST + indexPath + pricePath,
@@ -104,7 +110,14 @@ export async function getPrices() {
             console.error(error);
         });
 
-    return allPrices.sort((a, b) => (a.name > b.name) ? 1 : -1);
+    let finalPrices = new Array();
+    allPrices.forEach((e,i) =>{
+        if(types.includes(e.name)){
+            finalPrices.push(e);
+        }
+    })
+
+    return finalPrices.sort((a, b) => (a.name > b.name) ? 1 : -1);
 }
 
 function roundUp(num, precision) {

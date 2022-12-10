@@ -24,3 +24,7 @@ a {
     background: black;
   }
 }
+
+.is-width-256{
+  width: 256px;
+}

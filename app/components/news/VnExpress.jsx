@@ -1,20 +1,18 @@
 import {useEffect, useState} from "react";
-import {getRss} from "./RssData";
-import Image from "next/image";
+import {getRss} from "./VnExpressData";
 import parse from 'html-react-parser';
 
-const Rss = () => {
+const VnExpress = (props) => {
     const [isLoading, setLoading] = useState(false)
     const [rssData, setRssData] = useState(null)
 
     useEffect(() => {
         setLoading(true)
-        getRss().then(json => {
-            setRssData(json)
-            console.log(json);
-            setLoading(false)
-        })
-
+        getRss(props.types)
+            .then(json => {
+                setRssData(json)
+                setLoading(false)
+            })
 
     }, [])
 
@@ -24,13 +22,12 @@ const Rss = () => {
     return (
         <div>
             <h1>News</h1>
-
             {
-                rssData.items.map((element, index) => {
+                rssData.map((element, index) => {
                     return (
                         <article className="media" key={index}>
                             <figure className="media-left">
-                                <div className="image is-128x128">
+                                <div className="image is-width-256">
                                     {parse(element.content)}
                                 </div>
                             </figure>
@@ -53,4 +50,4 @@ const Rss = () => {
     )
 }
 
-export default Rss;
+export default VnExpress;

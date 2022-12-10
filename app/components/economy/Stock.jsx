@@ -1,28 +1,28 @@
 import {useEffect, useState} from "react";
 import {getIndexes, getPrices} from "./StockData";
 
-const Stock = () => {
+const Stock = (props) => {
     const [isLoading, setLoading] = useState(false)
     const [indexes, setIndexes] = useState([])
     const [prices, setPrices] = useState([])
 
     useEffect(() => {
-        getIndexes().then((data) => {
+        getIndexes(props.indexes).then((data) => {
             setIndexes(data)
         })
 
-        getPrices().then((data) => {
+        getPrices(props.types).then((data) => {
             setPrices(data)
         });
 
         setLoading(false)
 
         const interval = setInterval(() => {
-            getIndexes().then((data) => {
+            getIndexes(props.indexes).then((data) => {
                 setIndexes(data)
             })
 
-            getPrices().then((data) => {
+            getPrices(props.types).then((data) => {
                 setPrices(data)
             });
         }, 10000);
