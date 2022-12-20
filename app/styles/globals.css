@@ -25,6 +25,10 @@ a {
   }
 }
 
+.is-width-180{
+  width: 180px;
+}
+
 .is-width-256{
   width: 256px;
 }

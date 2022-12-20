@@ -22,6 +22,7 @@ export default function Index() {
                     <Aside/>
                     <section className="section is-main-section">
                         <Stock indexes={['VN','NASDAQ 100','S&P 500']} types={['Gold','Bitcoin','Crude Oil']}/>
+                        <br/>
                         <VnExpress types={['tin-moi-nhat']} page={20}/>
 
                     </section>

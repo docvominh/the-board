@@ -21,13 +21,13 @@ const Aside = () => {
                     <li>
                         <a href="tables.html" className="has-icon">
                             <span className="icon has-update-mark"><i className="mdi mdi-table"></i></span>
-                            <span className="menu-item-label">Tables</span>
+                            <span className="menu-item-label">Stock</span>
                         </a>
                     </li>
                     <li>
                         <a href="forms.html" className="has-icon">
                             <span className="icon"><i className="mdi mdi-square-edit-outline"></i></span>
-                            <span className="menu-item-label">Forms</span>
+                            <span className="menu-item-label">Tech</span>
                         </a>
                     </li>
                     <li>
