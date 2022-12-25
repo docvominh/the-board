@@ -1,4 +1,12 @@
+import {useEffect, useState} from "react";
+import GoogleLogin from "./GoogleLogin";
+
 const Nav = () => {
+    const [isClient, setIsClient] = useState(false)
+    useEffect(() => {
+        // update some client side state to say it is now safe to render the client-side only component
+        setIsClient(true)
+    }, []);
     return (
         <nav id="navbar-main" className="navbar is-fixed-top">
             <div className="navbar-brand">
@@ -81,7 +89,11 @@ const Nav = () => {
                         <span>Log out</span>
                     </a>
                 </div>
+
+                {isClient && <GoogleLogin/>}
+
             </div>
+
         </nav>
     )
 }

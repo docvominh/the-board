@@ -40,6 +40,7 @@ export default function Index() {
                 </a>
             </footer>
             <Script src="scripts/main.js" strategy="beforeInteractive"/>
+            <script src="https://accounts.google.com/gsi/client" async defer ></script>
             <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css"/>
         </div>
 
