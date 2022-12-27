@@ -5,9 +5,19 @@ import Stock from "../components/economy/Stock";
 import Nav from "../components/layout/Nav";
 import Aside from "../components/layout/Aside";
 import Script from "next/script";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 export default function Index() {
+    const [user , setUser ] = useState(null);
+    useEffect(() => {
+        // update some client side state to say it is now safe to render the client-side only component
+        let token = localStorage.getItem('auth_token');
+
+        if (token == null) {
+        } else {
+            setUser(JSON.parse(atob(token.split('.')[1])));
+        }
+    }, []);
 
     return (
         <div id="container">
@@ -18,13 +28,12 @@ export default function Index() {
 
             <main className="main">
                 <div id="app">
-                    <Nav/>
+                    <Nav user={user}/>
                     <Aside/>
                     <section className="section is-main-section">
                         <Stock indexes={['VN','NASDAQ 100','S&P 500']} types={['Gold','Bitcoin','Crude Oil']}/>
                         <br/>
                         <VnExpress types={['tin-moi-nhat']} page={20}/>
-
                     </section>
                 </div>
             </main>

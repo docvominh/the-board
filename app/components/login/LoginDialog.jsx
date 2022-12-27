@@ -2,20 +2,15 @@ import {useEffect, useState} from "react";
 import Google from "./Google";
 import Github from "./Github";
 
-const LoginDialog = () => {
-    const [isClient , setIsClient ] = useState(false);
-    useEffect(() => {
-        setIsClient(true)
-    }, []);
-
+const LoginDialog = (props) => {
 
     const close = () => {
-        let loginDialog = document.getElementById('loginDialog');
-        loginDialog.classList.remove('is-active')
+        props.setLoginVisible(false);
     };
 
+    const active = props.visible ? 'is-active' : '';
     return (
-        <div id="loginDialog" className="modal">
+        <div id="loginDialog" className={`modal ${active}`}>
             <div className="modal-background"/>
             <div className="modal-card">
                 <header className="modal-card-head">
@@ -28,7 +23,7 @@ const LoginDialog = () => {
                 </header>
                 <section className="modal-card-body">
                     <div className="field">
-                        <Google/>
+                        <Google />
                     </div>
 
                     <div className="field">

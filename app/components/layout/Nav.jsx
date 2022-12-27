@@ -1,31 +1,24 @@
 import {useEffect, useState} from "react";
 import LoginDialog from "../login/LoginDialog";
 
-const Nav = () => {
+const Nav = (props) => {
     const [isClient , setIsClient ] = useState(false);
     const [loginVisible , setLoginVisible ] = useState(false);
-    const [isLoggedIn , setIsLoggedIn ] = useState(false);
-    const [user , setUser ] = useState(null);
+
 
     useEffect(() => {
         setIsClient(true)
-        // update some client side state to say it is now safe to render the client-side only component
-        let token = localStorage.getItem('auth_token');
-
-        if (token == null) {
-            setIsLoggedIn(false)
-        } else {
-            setIsLoggedIn(true)
-            setUser(JSON.parse(atob(token.split('.')[1])));
-        }
     }, []);
 
-    const handleClickLoginButton = () => {
-        let loginDialog = document.getElementById('loginDialog');
-        loginDialog.classList.add('is-active')
+    const openLogin = () => {
+        setLoginVisible(true);
     };
 
-    console.log(user)
+    const logOut = () => {
+        localStorage.removeItem('auth_token')
+        window.location.reload();
+    };
+
     return (
         <nav id="navbar-main" className="navbar is-fixed-top">
             <div className="navbar-brand">
@@ -43,10 +36,10 @@ const Nav = () => {
                 </a>
             </div>
 
-            {isClient && !isLoggedIn &&
+            {isClient && props.user == null &&
                 <div className="navbar-menu fadeIn animated faster" id="navbar-menu">
                     <div className="navbar-end">
-                        <a href="#" title="About" className="navbar-item has-divider is-desktop-icon-only" onClick={handleClickLoginButton}>
+                        <a title="About" className="navbar-item has-divider is-desktop-icon-only" onClick={openLogin}>
                             <span className="icon"><i className="mdi mdi-account"></i></span>
                             <span>Login</span>
                         </a>
@@ -54,17 +47,17 @@ const Nav = () => {
                 </div>
             }
 
-            { isClient && !isLoggedIn && <LoginDialog /> }
+            { isClient && props.user == null && <LoginDialog visible={loginVisible} setLoginVisible={setLoginVisible} /> }
 
-            { isClient && isLoggedIn &&
+            { isClient && props.user != null &&
                 <div className="navbar-menu fadeIn animated faster" id="navbar-menu">
                     <div className="navbar-end">
                         <div className="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
                             <a className="navbar-link is-arrowless">
                                 <div className="is-user-avatar">
-                                    <img src={user.picture} alt={user.name}/>
+                                    <img src={props.user.picture} alt={props.user.name}/>
                                 </div>
-                                <div className="is-user-name"><span>{user.given_name}</span></div>
+                                <div className="is-user-name"><span>{props.user.given_name}</span></div>
                                 <span className="icon"><i className="mdi mdi-chevron-down"></i></span>
                             </a>
                             <div className="navbar-dropdown">
@@ -81,17 +74,12 @@ const Nav = () => {
                                     <span>Messages</span>
                                 </a>
                                 <hr className="navbar-divider"/>
-                                <a className="navbar-item">
+                                <a className="navbar-item" onClick={logOut}>
                                     <span className="icon"><i className="mdi mdi-logout"></i></span>
                                     <span>Log Out</span>
                                 </a>
                             </div>
                         </div>
-
-                        <a title="Log out" className="navbar-item is-desktop-icon-only">
-                            <span className="icon"><i className="mdi mdi-logout"></i></span>
-                            <span>Log out</span>
-                        </a>
                     </div>
                 </div>
             }
